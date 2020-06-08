@@ -19,8 +19,9 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(
       context,
-      // listen: true,  //default is true
+      listen: false, //default is true
     );
+
     // ClipRRect uses its own bounds as the base rectangle for the clip,
     // but the size and location of the clip can be customized using a custom clipper.
     return ClipRRect(
@@ -46,14 +47,16 @@ class ProductItem extends StatelessWidget {
         //footer adds a bar at the bottom of the gridtile
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-            icon: Icon(
-              product.isFavorite ? Icons.favorite : Icons.favorite_border,
+          leading: Consumer<Product>(
+            builder: (ctx, product, _) => IconButton(
+              icon: Icon(
+                product.isFavorite ? Icons.favorite : Icons.favorite_border,
+              ),
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                product.toggleFavoriteStatus();
+              },
             ),
-            color: Theme.of(context).accentColor,
-            onPressed: () {
-              product.toggleFavoriteStatus();
-            },
           ),
           title: Text(
             product.title,
