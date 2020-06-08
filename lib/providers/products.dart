@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../models/product.dart';
+import './product.dart';
 
 //mix in are added using with keyword.You merge some properties into you existing class
 //you don't return your class into an instance of inherited class
