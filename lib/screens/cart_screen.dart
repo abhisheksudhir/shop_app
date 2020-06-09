@@ -44,9 +44,9 @@ class CartScreen extends StatelessWidget {
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
+                  if (cart.totalAmount > 0)
                   FlatButton(
                     onPressed: () {
-                      if (cart.totalAmount > 0)
                         Provider.of<Orders>(
                           context,
                           listen: false,
