@@ -42,6 +42,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
+      if (_imageUrlController.text.isEmpty) {
+        setState(() {});
+        return;
+      }
+      if ((!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
       setState(() {});
     }
   }
@@ -117,6 +128,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Please provide a price';
+                  } else if (double.tryParse(value) == null) {
+                    return 'price has to be number';
                   } else if (double.parse(value) < 0) {
                     return 'price can\'t be negative';
                   }
@@ -201,6 +214,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please provide an image url';
+                        } else if (!value.startsWith('http') &&
+                            !value.startsWith('https')) {
+                          return 'Please enter valid url';
+                        } else if (!value.endsWith('.jpg') &&
+                            !value.endsWith('.png') &&
+                            !value.endsWith('.jpeg')) {
+                          return 'Please enter valid image url';
                         }
                         return null;
                       },
