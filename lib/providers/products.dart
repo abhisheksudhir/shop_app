@@ -1,4 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import './product.dart';
 
@@ -68,6 +71,17 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
+    const url = 'https://flutter---shopapp-6a814.firebaseio.com/products.json';
+    http.post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavorite': product.isFavorite,
+      }),
+    );
     final newProduct = Product(
       title: product.title,
       description: product.description,
