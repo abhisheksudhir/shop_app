@@ -46,7 +46,7 @@ class CartItem extends StatelessWidget {
               'Are you sure?',
             ),
             content: Text(
-              'Do you want to remove ${title} from the card?',
+              'Do you want to remove ${title} from the cart?',
             ),
             actions: <Widget>[
               FlatButton(
