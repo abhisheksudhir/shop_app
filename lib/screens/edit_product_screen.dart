@@ -283,7 +283,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   alignment: Alignment.center,
                                   child: Image.network(
                                     _imageUrlController.text,
-                                    fit: BoxFit.cover,
+                                    // fit: BoxFit.cover,
                                   ),
                                   fit: BoxFit.cover,
                                 ),
