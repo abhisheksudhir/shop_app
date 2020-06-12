@@ -46,6 +46,13 @@ class Products with ChangeNotifier {
 
   // var _showFavoritesOnly = false;
 
+  final String authToken;
+
+  Products(
+    this.authToken,
+    this._items,
+  );
+
   List<Product> get items {
     // if (_showFavoritesOnly) {
     //   return _items.where((proditem) => proditem.isFavorite).toList();
@@ -73,7 +80,8 @@ class Products with ChangeNotifier {
 
   Future<void> fetchAndSetProducts() async {
     // print(_items);
-    const url = 'https://flutter---shopapp-6a814.firebaseio.com/products.json';
+    final url =
+        'https://flutter---shopapp-6a814.firebaseio.com/products.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -155,18 +163,20 @@ class Products with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = 'https://flutter---shopapp-6a814.firebaseio.com/products/$id.json';
+    final url =
+        'https://flutter---shopapp-6a814.firebaseio.com/products/$id.json';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
     notifyListeners();
     final response = await http.delete(url);
 
-      if(response.statusCode >= 400) {
-        _items.insert(existingProductIndex, existingProduct);
+    if (response.statusCode >= 400) {
+      _items.insert(existingProductIndex, existingProduct);
       notifyListeners();
-        throw HttpException('Could not delete product.'); //throw is basically like return(it cancels the function execution)
-      }
-      existingProduct = null;
+      throw HttpException(
+          'Could not delete product.'); //throw is basically like return(it cancels the function execution)
+    }
+    existingProduct = null;
   }
 }
