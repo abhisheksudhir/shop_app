@@ -27,12 +27,12 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus() async {
+  Future<void> toggleFavoriteStatus(String token) async {
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
     final url =
-        'https://flutter---shopapp-6a814.firebaseio.com/products/$id.json';
+        'https://flutter---shopapp-6a814.firebaseio.com/products/$id.json?auth=$token';
     try {
       //http package only throws its own error only for get and post requests
       final response = await http.patch(
@@ -42,7 +42,8 @@ class Product with ChangeNotifier {
         }),
       );
       if (response.statusCode >= 400) {
-        throw HttpException('Could not delete product.');
+        // print('exception');
+        throw HttpException('Could not add to favorites.');
       }
     } catch (error) {
        _setFavoritevalue(oldStatus);

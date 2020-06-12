@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/product.dart';
 import '../providers/cart.dart';
+import '../providers/auth.dart';
 import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
@@ -25,6 +26,10 @@ class ProductItem extends StatelessWidget {
     final cart = Provider.of<Cart>(
       context,
       listen: false, //default is true
+    );
+    final authData = Provider.of<Auth>(
+      context,
+      listen: false,
     );
 
     // ClipRRect uses its own bounds as the base rectangle for the clip,
@@ -59,7 +64,7 @@ class ProductItem extends StatelessWidget {
               ),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                product.toggleFavoriteStatus();
+                product.toggleFavoriteStatus(authData.token);
               },
             ),
           ),
